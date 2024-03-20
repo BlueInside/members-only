@@ -4,15 +4,16 @@ const { body, validationResult } = require('express-validator');
 const { genPassword } = require('../lib/passwordUtils');
 const asyncHandler = require('express-async-handler');
 const User = require('../models/user');
+const passport = require('passport');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  res.render('index');
+  res.render('index', { user: req.user });
 });
 
 // Sign-up form page
 router.get('/sign-up', (req, res, next) => {
-  res.render('signup_form', { title: 'Sign up' });
+  res.render('sign-up-form', { title: 'Sign up' });
 });
 
 // Sign-up post
@@ -34,14 +35,14 @@ router.post('/sign-up', [
       .withMessage('Must be 1 - 18 characters long')
       .escape(),
 
-    body('userName')
+    body('username')
       .trim()
       .notEmpty()
       .withMessage('Username field must not be empty')
       .isEmail()
       .withMessage('Username must be a valid email address')
       .custom(async (value) => {
-        const existingUser = await User.findOne({ userName: value });
+        const existingUser = await User.findOne({ username: value });
         if (existingUser) {
           throw new Error('Email is already in use');
         }
@@ -72,7 +73,7 @@ router.post('/sign-up', [
       const user = new User({
         firstName: req.body.name,
         lastName: req.body.surname,
-        userName: req.body.userName,
+        username: req.body.username,
         password: hashedPassword,
         memberStatus: 'false',
       });
@@ -81,7 +82,7 @@ router.post('/sign-up', [
       const errors = validationResult(req);
       // If there are validation errors, render the signup form with error messages
       if (!errors.isEmpty()) {
-        return res.render('signup_form', {
+        return res.render('sign-up-form', {
           title: 'Sign up',
           input: user,
           errors: errors.array(),
@@ -98,14 +99,22 @@ router.post('/sign-up', [
 
 // Login get page
 router.get('/login', (req, res, next) => {
-  res.send('Not implemented GET login page');
+  res.render('login-form', { title: 'Welcome Back! Login to Your Account' });
 });
 
 // Login post page
-router.post('/login', (req, res, next) => {
-  res.send('not implemented POST login page');
-});
-module.exports = router;
+router.post('/login', [
+  body('username').trim().escape(),
+  body('password').trim().escape(),
+
+  passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/login',
+  }),
+  (req, res, next) => {
+    res.send('not implemented POST login page');
+  },
+]);
 
 // Become member GET secret page
 router.get('/secret-page', (req, res, next) => {
@@ -131,3 +140,5 @@ router.post('/secret-page', [
     }
   }),
 ]);
+
+module.exports = router;
