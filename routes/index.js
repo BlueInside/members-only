@@ -116,6 +116,16 @@ router.post('/login', [
   },
 ]);
 
+// Log out post page
+router.post('/logout', (req, res, next) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+    res.redirect('/');
+  });
+});
+
 // Become member GET secret page
 router.get('/secret-page', (req, res, next) => {
   res.render('secret-page', {
