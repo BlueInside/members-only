@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { body, validationResult } = require('express-validator');
 const User = require('../models/user');
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -12,9 +13,73 @@ router.get('/sign-up', (req, res, next) => {
 });
 
 // Sign-up post
-router.post('/sign-up', (req, res, next) => {
-  res.send('Not implemented POST sign-up page');
-});
+router.post('/sign-up', [
+  [
+    body('name')
+      .trim()
+      .notEmpty()
+      .withMessage('Name field must not be empty')
+      .isLength({ min: 1, max: 18 })
+      .withMessage('Must be 1 - 18 characters long')
+      .escape(),
+
+    body('surname')
+      .trim()
+      .notEmpty()
+      .withMessage('Surname field must not be empty')
+      .isLength({ min: 1, max: 18 })
+      .withMessage('Must be 1 - 18 characters long')
+      .escape(),
+
+    body('userName')
+      .trim()
+      .notEmpty()
+      .withMessage('Username field must not be empty')
+      .isEmail()
+      .withMessage('Username must be a valid email address')
+      .custom(async (value) => {
+        const existingUser = await User.findOne({ userName: value });
+        if (existingUser) {
+          throw new Error('Email is already in use');
+        }
+      })
+      .escape(),
+
+    body('password')
+      .trim()
+      .notEmpty()
+      .withMessage('Password field must not be empty')
+      .isLength({ min: 5 })
+      .withMessage('Password must have at least 5 characters')
+      .escape(),
+
+    body('confirmPassword')
+      .trim()
+      .notEmpty()
+      .withMessage('Confirm Password field must not be empty')
+      .custom((value, { req }) => value === req.body.password)
+      .withMessage('Passwords must match'),
+
+    (req, res, next) => {
+      const user = new User({
+        firstName: req.body.name,
+        lastName: req.body.surname,
+        userName: req.body.userName,
+      });
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        res.render('signup_form', {
+          title: 'Sign up',
+          user: user,
+          errors: errors.array(),
+        });
+        return;
+      }
+
+      res.send('user created!');
+    },
+  ],
+]);
 
 // Login get page
 router.get('/login', (req, res, next) => {
