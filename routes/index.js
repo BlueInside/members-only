@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const { body, validationResult } = require('express-validator');
+const bcrypt = require('bcryptjs');
+const asyncHandler = require('express-async-handler');
 const User = require('../models/user');
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -60,24 +62,35 @@ router.post('/sign-up', [
       .custom((value, { req }) => value === req.body.password)
       .withMessage('Passwords must match'),
 
-    (req, res, next) => {
+    // Async handler to handle asynchronous operations
+    asyncHandler(async (req, res) => {
+      // Hash the password
+      const hashedPassword = await bcrypt.hash(req.body.password, 10);
+
+      // Create new user object with hashed password
       const user = new User({
         firstName: req.body.name,
         lastName: req.body.surname,
         userName: req.body.userName,
+        password: hashedPassword,
       });
+
+      // Validate the user input
       const errors = validationResult(req);
+      // If there are validation errors, render the signup form with error messages
       if (!errors.isEmpty()) {
-        res.render('signup_form', {
+        return res.render('signup_form', {
           title: 'Sign up',
-          user: user,
+          input: user,
           errors: errors.array(),
         });
-        return;
       }
 
-      res.send('user created!');
-    },
+      // Save the user to the database
+      await user.save();
+      // Redirect the user to the home page after successful registration
+      return res.redirect('/');
+    }),
   ],
 ]);
 
