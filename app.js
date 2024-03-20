@@ -45,6 +45,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Passport authentication
 require('./config/passport');
 
+// Middleware to access current user in views
+app.use((req, res, next) => {
+  res.locals.currentUser = req.user;
+  next();
+});
+
 // Routes handler
 app.use('/', indexRouter);
 
