@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 const { body, validationResult } = require('express-validator');
 const { genPassword } = require('../lib/passwordUtils');
-
 const asyncHandler = require('express-async-handler');
 const User = require('../models/user');
+
 /* GET home page. */
 router.get('/', function (req, res, next) {
   res.render('index');
