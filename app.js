@@ -33,6 +33,7 @@ app.use(
     }),
   })
 );
+
 app.use(passport.session());
 
 app.use(logger('dev'));
@@ -43,8 +44,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Passport authentication
 require('./config/passport');
-
-app.use(passport.initialize());
 
 // Routes handler
 app.use('/', indexRouter);
