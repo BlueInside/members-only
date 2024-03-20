@@ -6,13 +6,13 @@ block content
     form(method="POST")
         div
             label(for="name") First name: 
-            input(type="text" id="name" name="name" required value= ((locals.user && user.firstName) ? user.firstName : ''  ))
+            input(type="text" id="name" name="name" required value= ((locals.input && input.firstName) ? input.firstName : ''  ))
         div
             label(for="surname") Last name: 
-            input(type="text" id="surname" name="surname" required value= ((locals.user && user.lastName) ? user.lastName : ''))
+            input(type="text" id="surname" name="surname" required value= ((locals.input && input.lastName) ? input.lastName : ''))
         div
             label(for="username") Username: 
-            input(type="email" id="username" name="userName" required value= ((locals.user && user.userName) ? user.userName : ''))  
+            input(type="email" id="username" name="userName" required value= ((locals.input && input.userName) ? input.userName : ''))  
         div
             label(for="password") Password: 
             input(type="password" id="password" name="password" required)  
