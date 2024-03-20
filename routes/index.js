@@ -126,7 +126,7 @@ router.post('/secret-page', [
     } else {
       res.render('secret-page', {
         title: 'Unlock Your Membership: Enter the Secret Realm',
-        error: 'WRONG !!!!!',
+        error: 'WRONG !!!',
       });
     }
   }),
