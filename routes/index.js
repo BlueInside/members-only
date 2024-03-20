@@ -105,3 +105,10 @@ router.post('/login', (req, res, next) => {
   res.send('not implemented POST login page');
 });
 module.exports = router;
+
+// Become member secret page
+router.get('/secret-page', (req, res, next) => {
+  res.render('secret-page', {
+    title: 'Unlock Your Membership: Enter the Secret Realm',
+  });
+});
