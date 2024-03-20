@@ -5,7 +5,6 @@ const userSchema = new mongoose.Schema({
   lastName: { type: String, required: true, minLength: 1 },
   userName: { type: String, required: true, minLength: 1, unique: true }, // Required username which will be email
   hash: { type: String, required: true }, // Hashed password
-  salt: { type: String, required: true }, // Hashed salt
 });
 
 userSchema.virtual('fullName').get(function () {
