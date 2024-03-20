@@ -106,9 +106,27 @@ router.post('/login', (req, res, next) => {
 });
 module.exports = router;
 
-// Become member secret page
+// Become member GET secret page
 router.get('/secret-page', (req, res, next) => {
   res.render('secret-page', {
     title: 'Unlock Your Membership: Enter the Secret Realm',
   });
 });
+
+// Become member POST secret page
+router.post('/secret-page', [
+  body('secret').trim().notEmpty().toLowerCase().escape(),
+
+  asyncHandler(async (req, res) => {
+    console.log(req.body);
+    if (req.body.secret === 'kitty') {
+      // if user logged in update its membership
+      res.send('You are now a member');
+    } else {
+      res.render('secret-page', {
+        title: 'Unlock Your Membership: Enter the Secret Realm',
+        error: 'WRONG !!!',
+      });
+    }
+  }),
+]);
