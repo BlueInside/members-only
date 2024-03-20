@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const { body, validationResult } = require('express-validator');
-const bcrypt = require('bcryptjs');
+const { genPassword } = require('../lib/passwordUtils');
+
 const asyncHandler = require('express-async-handler');
 const User = require('../models/user');
 /* GET home page. */
@@ -65,7 +66,7 @@ router.post('/sign-up', [
     // Async handler to handle asynchronous operations
     asyncHandler(async (req, res) => {
       // Hash the password
-      const hashedPassword = await bcrypt.hash(req.body.password, 10);
+      const hashedPassword = await genPassword(req.body.password);
 
       // Create new user object with hashed password
       const user = new User({
@@ -125,7 +126,7 @@ router.post('/secret-page', [
     } else {
       res.render('secret-page', {
         title: 'Unlock Your Membership: Enter the Secret Realm',
-        error: 'WRONG !!!',
+        error: 'WRONG !!!!!',
       });
     }
   }),
