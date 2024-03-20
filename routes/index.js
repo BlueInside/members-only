@@ -129,8 +129,9 @@ router.post('/secret-page', [
 
   asyncHandler(async (req, res) => {
     console.log(req.body);
-    if (req.body.secret === 'kitty') {
-      // if user logged in update its membership
+    if (req.body.secret === 'kitty' && req.isAuthenticated()) {
+      // if user is logged in and secret is right update its membership
+      await User.findByIdAndUpdate(req.user.id, { memberStatus: 'true' });
       res.send('You are now a member');
     } else {
       res.render('secret-page', {
