@@ -1,0 +1,27 @@
+extends layout 
+
+block content 
+    h1 #{title}
+
+    form(method="POST")
+        div
+            label(for="name") First name: 
+            input(type="text" id="name" name="name" placeholder="Leon" required value= ((locals.input && input.firstName) ? input.firstName : ''  ))
+        div
+            label(for="surname") Last name: 
+            input(type="text" id="surname" name="surname" placeholder="Scott" required value= ((locals.input && input.lastName) ? input.lastName : ''))
+        div
+            label(for="username") Username: 
+            input(type="email" id="username" name="username" placeholder="Cat@o2.pl" required value= ((locals.input && input.username) ? input.username : ''))  
+        div
+            label(for="password") Password: 
+            input(type="password" id="password" name="password" placeholder="******" required)  
+        div
+            label(for="confirmPassword") Confirm password: 
+            input(type="password" id="confirmPassword" name="confirmPassword" placeholder="******" required)     
+        button(type="Submit") Sign up 
+
+    if errors
+        ul 
+            each error in errors
+                li= error.msg
