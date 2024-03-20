@@ -12,7 +12,7 @@ block content
             input(type="text" id="surname" name="surname" required value= ((locals.user && user.lastName) ? user.lastName : ''))
         div
             label(for="username") Username: 
-            input(type="email" id="username" name="username" required value= ((locals.user && user.userName) ? user.userName : ''))  
+            input(type="email" id="username" name="userName" required value= ((locals.user && user.userName) ? user.userName : ''))  
         div
             label(for="password") Password: 
             input(type="password" id="password" name="password" required)  
@@ -24,4 +24,4 @@ block content
     if errors
         ul 
             each error in errors
-                li= error.message
+                li= error.msg
