@@ -73,6 +73,7 @@ router.post('/sign-up', [
         lastName: req.body.surname,
         userName: req.body.userName,
         password: hashedPassword,
+        memberStatus: 'false',
       });
 
       // Validate the user input
