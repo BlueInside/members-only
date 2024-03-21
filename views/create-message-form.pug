@@ -1,0 +1,15 @@
+extends layout 
+
+block content 
+
+    h1= title 
+
+    form(method="POST") 
+        div 
+            label(for="title") Title: 
+            input#title(name="title", placeholder="A good title" required) 
+        div 
+            label(for="message") Message: 
+            textarea#message(name="message", cols="30", rows="10" placeholder="Here's my long story how much i love cats")
+        div     
+            button(type="submit") Send a message
