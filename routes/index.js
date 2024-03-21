@@ -4,12 +4,18 @@ const { body, validationResult } = require('express-validator');
 const { genPassword } = require('../lib/passwordUtils');
 const asyncHandler = require('express-async-handler');
 const User = require('../models/user');
+const Message = require('../models/message');
 const passport = require('passport');
+const isAuth = require('./authMiddleware').isAuth;
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
-  res.render('index', { user: req.user });
-});
+router.get(
+  '/',
+  asyncHandler(async (req, res, next) => {
+    const messages = await Message.find({}).sort({ timeStamp: 1 }).exec();
+    res.render('index', { messages: messages });
+  })
+);
 
 // Sign-up form page
 router.get('/sign-up', (req, res, next) => {
@@ -142,12 +148,41 @@ router.post('/secret-page', [
     if (req.body.secret === 'kitty' && req.isAuthenticated()) {
       // if user is logged in and secret is right update its membership
       await User.findByIdAndUpdate(req.user.id, { memberStatus: 'true' });
-      res.send('You are now a member');
+      res.render('new-member');
     } else {
       res.render('secret-page', {
         title: 'Unlock Your Membership: Enter the Secret Realm',
         error: 'WRONG !!!',
       });
+    }
+  }),
+]);
+
+// New message GET page
+router.get('/new-message', (req, res, next) => {
+  res.render('create-message-form', { title: 'Compose a New Message' });
+});
+
+// New message POST page
+router.post('/new-message', [
+  body('title').trim().notEmpty().escape(),
+  body('text').trim().notEmpty().escape(),
+
+  asyncHandler(async (req, res, next) => {
+    const message = new Message({
+      user: req.user.id,
+      title: req.body.title,
+      text: req.body.text,
+      timeStamp: Date.now(),
+    });
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.render('create-message-form', { errors: errors.array() });
+      return;
+    } else {
+      const newMessage = await message.save();
+      res.redirect('/');
     }
   }),
 ]);
