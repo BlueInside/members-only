@@ -2,4 +2,16 @@ extends layout
 
 block content
  
-  h1 Welcome to the main page #{user ? user.fullName: '' }
+  h1 Welcome to the main page #{currentUser ? currentUser.fullName: '' }
+
+  if messages.length > 0
+    each message in messages 
+      div 
+        h3= message.title
+        span= message.user + ' '
+        span= message.formattedTimeStamp
+        p= message.text
+
+        
+  else 
+    p No messages to display
