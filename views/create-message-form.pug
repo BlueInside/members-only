@@ -9,9 +9,14 @@ block content
                 label(for="title") Title: 
                 input#title(name="title", placeholder="A good title" required) 
             div 
-                label(for="message") Message: 
-                textarea#message(name="message", cols="30", rows="10" placeholder="Here's my long story how much i love cats")
+                label(for="text") Message: 
+                textarea#message(name="text", cols="30", rows="10" placeholder="Here's my long story how much i love cats")
             div     
                 button(type="submit") Send a message
     else 
         p Membership Required: Enter the Secret Realm to Unlock Posting Privileges!
+
+    if errors 
+        ul 
+            each error in errors 
+                li= error.msg     
