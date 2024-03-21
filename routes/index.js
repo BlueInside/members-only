@@ -12,7 +12,11 @@ const isAuth = require('./authMiddleware').isAuth;
 router.get(
   '/',
   asyncHandler(async (req, res, next) => {
-    const messages = await Message.find({}).sort({ timeStamp: 1 }).exec();
+    const messages = await Message.find({})
+      .populate('user')
+      .sort({ timeStamp: -1 })
+      .exec();
+
     res.render('index', { messages: messages });
   })
 );
