@@ -18,7 +18,11 @@ block content
             input(type="password" id="password" name="password" placeholder="******" required)  
         div
             label(for="confirmPassword") Confirm password: 
-            input(type="password" id="confirmPassword" name="confirmPassword" placeholder="******" required)     
+            input(type="password" id="confirmPassword" name="confirmPassword" placeholder="******" required)
+        div 
+            label#isAdmin Admin 
+            input(type="checkbox" name="isAdmin" value="true" )     
+
         button(type="Submit") Sign up 
 
     if errors
