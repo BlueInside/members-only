@@ -194,4 +194,13 @@ router.post('/new-message', [
   }),
 ]);
 
+// Delete message POST
+router.post(
+  '/delete-message/:id',
+  asyncHandler(async (req, res, next) => {
+    const deletedMessage = await Message.findByIdAndDelete(req.params.id);
+    res.redirect('/');
+  })
+);
+
 module.exports = router;
