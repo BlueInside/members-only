@@ -2,22 +2,24 @@ extends layout
 
 block content
  
-  h1 Welcome to the Legendary Adventurers Club
+  h1.title Welcome to the Legendary Adventurers Club
   if currentUser
-    span Logged in as #{user.username}
+    span Logged in as #{currentUser.fullName}
 
   if messages.length > 0
     each message in messages 
-      div 
+      div.message 
         h3= message.title
-        if currentUser && currentUser.memberStatus 
-          span= message.user.fullName + ' '
-          span= message.formattedTimeStamp 
-          if currentUser.admin 
-            form(action=`delete-message/${message.id}` method="POST")
-              input#messageID(type="hidden" name=message.id)
-              button(type="submit") Delete 
-        p= message.text
+        div.message-details 
+          if currentUser && currentUser.memberStatus 
+            span.message-username= message.user.fullName + ' '
+            span= message.formattedTimeStamp 
+            if currentUser.admin 
+              form(action=`delete-message/${message.id}` method="POST")
+                input#messageID(type="hidden" name=message.id)
+                button(type="submit") Delete 
+        p.message-text= message.text
+     
 
         
   else 
