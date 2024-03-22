@@ -80,12 +80,15 @@ router.post('/sign-up', [
       const hashedPassword = await genPassword(req.body.password);
 
       // Create new user object with hashed password
+
+      let isAdmin = req.body.isAdmin === 'true';
       const user = new User({
         firstName: req.body.name,
         lastName: req.body.surname,
         username: req.body.username,
         password: hashedPassword,
-        memberStatus: 'false',
+        memberStatus: false,
+        admin: isAdmin,
       });
 
       // Validate the user input
@@ -100,6 +103,7 @@ router.post('/sign-up', [
       }
 
       // Save the user to the database
+      console.log(user);
       await user.save();
       // Redirect the user to the home page after successful registration
       return res.redirect('/');
