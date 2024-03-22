@@ -6,6 +6,7 @@ const userSchema = new mongoose.Schema({
   username: { type: String, required: true, minLength: 1, unique: true }, // Required username which will be email
   password: { type: String, required: true }, // Hashed password
   memberStatus: { type: Boolean, required: true },
+  admin: Boolean,
 });
 
 userSchema.virtual('fullName').get(function () {
