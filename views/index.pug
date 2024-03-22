@@ -10,7 +10,11 @@ block content
         h3= message.title
         if currentUser && currentUser.memberStatus 
           span= message.user.fullName + ' '
-          span= message.formattedTimeStamp
+          span= message.formattedTimeStamp 
+          if currentUser.admin 
+            form(action=`delete-message/${message.id}` method="POST")
+              input#messageID(type="hidden" name=message.id)
+              button(type="submit") Delete 
         p= message.text
 
         
