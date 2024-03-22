@@ -1,8 +1,20 @@
+:root {
+  --dark-blue: #001f3f;
+  --green: #2ecc40;
+  --gold: #ffd700;
+  --gray: #aaaaaa;
+  --red: #ff4136;
+  --purple: #b10dc9;
+  --teal: #39cccc;
+}
+
 body {
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 14px 'Lucida Grande', Helvetica, Arial, sans-serif;
+  background-color: var(--dark-blue);
+  color: var(--gray);
 }
 
 a {
-  color: #00B7FF;
+  color: #00b7ff;
 }
