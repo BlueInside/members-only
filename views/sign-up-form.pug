@@ -1,7 +1,7 @@
 extends layout 
 
 block content 
-    h1 #{title}
+    h1.title #{title}
 
     form(method="POST")
         div
@@ -19,7 +19,7 @@ block content
         div
             label(for="confirmPassword") Confirm password: 
             input(type="password" id="confirmPassword" name="confirmPassword" placeholder="******" required)    
-            
+
         button(type="Submit") Sign up 
 
     if errors
