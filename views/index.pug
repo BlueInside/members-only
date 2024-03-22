@@ -8,8 +8,9 @@ block content
     each message in messages 
       div 
         h3= message.title
-        span= message.user.fullName + ' '
-        span= message.formattedTimeStamp
+        if currentUser && currentUser.memberStatus 
+          span= message.user.fullName + ' '
+          span= message.formattedTimeStamp
         p= message.text
 
         
