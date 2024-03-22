@@ -4,9 +4,9 @@ html
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
-    navbar 
-      div 
-        ul 
+  div.flex-container
+      nav.navbar 
+        ul.nav-list 
           li 
             a(href="/") Main page  
           li 
@@ -22,4 +22,5 @@ html
                 button(type="submit", class="link-button") Log out
           li 
             a(href="secret-page") Secret 
-    block content
+      div.flex-1 
+        block content
