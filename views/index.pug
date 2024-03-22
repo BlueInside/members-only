@@ -2,7 +2,9 @@ extends layout
 
 block content
  
-  h1 Welcome to the main page #{currentUser ? currentUser.fullName: '' }
+  h1 Welcome to the Legendary Adventurers Club
+  if currentUser
+    span Logged in as #{user.username}
 
   if messages.length > 0
     each message in messages 
