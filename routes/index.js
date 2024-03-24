@@ -167,7 +167,7 @@ router.post('/secret-page', [
     if (req.body.secret === 'kitty' && req.isAuthenticated()) {
       // if user is logged in and secret is right update its membership
       await User.findByIdAndUpdate(req.user.id, { memberStatus: 'true' });
-      res.render('new-member');
+      return res.render('new-member');
     } else {
       res.render('secret-page', {
         title: 'Unlock Your Membership: Enter the Secret Realm',
@@ -184,8 +184,12 @@ router.get('/new-message', (req, res, next) => {
 
 // New message POST page
 router.post('/new-message', [
-  body('title').trim().notEmpty().escape(),
-  body('text').trim().notEmpty().escape(),
+  body('title').trim().notEmpty().escape().withMessage(`Title can't be empty.`),
+  body('text')
+    .trim()
+    .notEmpty()
+    .escape()
+    .withMessage("Message can't be empty."),
 
   asyncHandler(async (req, res, next) => {
     const message = new Message({
@@ -197,7 +201,10 @@ router.post('/new-message', [
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      res.render('create-message-form', { errors: errors.array() });
+      res.render('create-message-form', {
+        title: 'Compose a New Message',
+        errors: errors.array(),
+      });
       return;
     } else {
       const newMessage = await message.save();
