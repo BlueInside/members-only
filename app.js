@@ -6,6 +6,7 @@ const passport = require('passport');
 const MongoStore = require('connect-mongo');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const helmet = require('helmet');
 
 // Gives access to the environmental variable
 require('dotenv').config();
@@ -34,8 +35,8 @@ app.use(
   })
 );
 
+app.use(helmet());
 app.use(passport.session());
-
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
