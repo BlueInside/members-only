@@ -11,7 +11,7 @@ const messageSchema = new Schema({
 });
 
 messageSchema.virtual('formattedTimeStamp').get(function () {
-  return format(this.timeStamp, 'd LLL Y H:mm');
+  return format(this.timeStamp, 'd LLL y H:mm');
 });
 
 // Export schema
