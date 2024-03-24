@@ -119,13 +119,25 @@ router.get('/login', (req, res, next) => {
 router.post('/login', [
   body('username').trim().escape(),
   body('password').trim().escape(),
-
-  passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/login',
-  }),
   (req, res, next) => {
-    res.send('not implemented POST login page');
+    // Custom passport authenticate
+    passport.authenticate('local', (err, user, info) => {
+      if (err) {
+        return next(err);
+      }
+      if (!user) {
+        return res.render('login-form', {
+          title: 'Welcome Back! Login to Your Account',
+          errors: [{ msg: info.message }],
+        }); // Render login with error
+      }
+      req.logIn(user, (err) => {
+        if (err) {
+          return next(err);
+        }
+        return res.redirect('/'); // Successful login redirect to home page
+      });
+    })(req, res, next);
   },
 ]);
 
