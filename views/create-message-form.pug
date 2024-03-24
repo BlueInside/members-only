@@ -16,8 +16,8 @@ block content
     else 
         p.notification Membership Required: Enter the Secret Realm to Unlock Posting Privileges!
 
-    if errors 
-        ul 
-        .error-message
-            each error in errors 
-                li= error.msg     
+    if errors
+        .error-message 
+            ul 
+                each error in errors 
+                    li= error.msg     
