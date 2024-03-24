@@ -11,7 +11,7 @@
 /*  Minimal CSS reset */
 html {
   box-sizing: border-box;
-  font-size: 16px;
+  font-size: 17px;
 }
 
 *,
@@ -48,7 +48,7 @@ img {
 
 body {
   padding: 50px;
-  font: 14px 'Lucida Grande', Helvetica, Arial, sans-serif;
+  font: 17px 'Lucida Grande', Helvetica, Arial, sans-serif;
   background-color: var(--dark-blue);
   color: var(--gray);
   /* max width 1200px and auto center */
@@ -124,4 +124,50 @@ body {
 }
 .message-text {
   margin-top: 5px;
+}
+
+/* Form styling */
+
+.login {
+  max-width: 400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login label {
+  width: 150px;
+  display: flex;
+}
+
+.login input {
+  min-width: 80%;
+}
+
+.login div {
+  margin-bottom: 20px;
+}
+
+.login input[type='text'],
+.login input[type='email'],
+.login input[type='password'] {
+  flex: 1; /* Take up remaining space */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box; /* Ensures padding and border are included in width */
+}
+
+.login button[type='submit'] {
+  padding: 10px;
+  background-color: #00b7ff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  min-width: 50%;
+}
+.login button[type='submit']:hover {
+  background-color: #0096d6; /* Darker shade for hover */
 }
