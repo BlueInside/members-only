@@ -22,6 +22,12 @@ const app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
+// Set up rate limiter
+const RateLimit = require('express-rate-limit');
+const limiter = RateLimit({
+  windowMs: 1 * 60 * 1000,
+  max: 40,
+});
 // Express session setup
 app.use(
   session({
@@ -35,6 +41,7 @@ app.use(
   })
 );
 
+app.use(limiter);
 app.use(helmet());
 app.use(passport.session());
 app.use(logger('dev'));
