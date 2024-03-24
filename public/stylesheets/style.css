@@ -69,6 +69,7 @@ body {
 /* Flex container */
 .flex-container {
   display: flex;
+  height: 100vh;
 }
 
 /* Navbar styles */
@@ -128,7 +129,7 @@ body {
 
 /* Form styling */
 
-.login {
+.form-container {
   max-width: 400px;
   margin: 0 auto;
   display: flex;
@@ -136,22 +137,22 @@ body {
   align-items: center;
 }
 
-.login label {
+.form-container label {
   width: 150px;
   display: flex;
 }
 
-.login input {
+.form-container input {
   min-width: 80%;
 }
 
-.login div {
+.form-container div {
   margin-bottom: 20px;
 }
 
-.login input[type='text'],
-.login input[type='email'],
-.login input[type='password'] {
+.form-container input[type='text'],
+.form-container input[type='email'],
+.form-container input[type='password'] {
   flex: 1; /* Take up remaining space */
   padding: 10px;
   border: 1px solid #ccc;
@@ -159,7 +160,7 @@ body {
   box-sizing: border-box; /* Ensures padding and border are included in width */
 }
 
-.login button[type='submit'] {
+.form-container button[type='submit'] {
   padding: 10px;
   background-color: #00b7ff;
   color: #fff;
@@ -168,6 +169,28 @@ body {
   cursor: pointer;
   min-width: 50%;
 }
-.login button[type='submit']:hover {
+.form-container button[type='submit']:hover {
   background-color: #0096d6; /* Darker shade for hover */
+}
+
+.notification {
+  display: flex;
+  height: 20%;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Error messages */
+
+.error-message {
+  margin: 15px;
+  padding: 10px;
+  background-color: #ffcccc;
+  color: #cc0000;
+  border: 1px solid #cc0000;
+  border-radius: 5px;
+}
+
+.error-message li {
+  list-style-type: none; /* Remove bullet points */
 }
