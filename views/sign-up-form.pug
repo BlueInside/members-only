@@ -3,7 +3,7 @@ extends layout
 block content 
     h1.title #{title}
 
-    form(method="POST")
+    form.login(method="POST")
         div
             label(for="name") First name: 
             input(type="text" id="name" name="name" placeholder="Leon" required value= ((locals.input && input.firstName) ? input.firstName : ''  ))
