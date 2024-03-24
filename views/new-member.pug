@@ -1,4 +1,5 @@
-if currentUser
-    h1 Membership Confirmed</h1>
-    p You have successfully entered the correct secret key and are now a member!</p>
-    a(href="/") Go to Main Page</a>
+if currentUser && currentUser.memberStatus
+    div.notification
+        h1 Membership Confirmed</h1>
+        p You have successfully entered the correct secret key and are now a member!</p>
+        a(href="/") Go to Main Page</a>

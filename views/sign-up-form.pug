@@ -3,7 +3,7 @@ extends layout
 block content 
     h1.title #{title}
 
-    form.login(method="POST")
+    form.form-container(method="POST")
         div
             label(for="name") First name: 
             input(type="text" id="name" name="name" placeholder="Leon" required value= ((locals.input && input.firstName) ? input.firstName : ''  ))
@@ -23,6 +23,7 @@ block content
         button(type="Submit") Sign up 
 
     if errors
-        ul 
-            each error in errors
-                li= error.msg
+        .error-message
+            ul 
+                each error in errors
+                    li= '- ' + error.msg

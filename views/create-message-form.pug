@@ -4,7 +4,7 @@ block content
 
     h1.title= title 
     if(currentUser && currentUser.memberStatus)
-        form(method="POST") 
+        form.form-container(method="POST") 
             div 
                 label(for="title") Title: 
                 input#title(name="title", placeholder="A good title" required) 
@@ -14,9 +14,10 @@ block content
             div     
                 button(type="submit") Send a message
     else 
-        p Membership Required: Enter the Secret Realm to Unlock Posting Privileges!
+        p.notification Membership Required: Enter the Secret Realm to Unlock Posting Privileges!
 
     if errors 
         ul 
+        .error-message
             each error in errors 
                 li= error.msg     
