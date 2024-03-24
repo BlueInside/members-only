@@ -10,7 +10,7 @@ block content
                 input#title(name="title", placeholder="A good title" required) 
             div 
                 label(for="text") Message: 
-                textarea#message(name="text", cols="30", rows="10" placeholder="Here's my long story how much i love cats")
+                textarea#message(name="text", cols="30", rows="10" placeholder="Here's my long story how much i love cats" required)
             div     
                 button(type="submit") Send a message
     else 
@@ -20,4 +20,4 @@ block content
         .error-message 
             ul 
                 each error in errors 
-                    li= error.msg     
+                    li= '- '+ error.msg     

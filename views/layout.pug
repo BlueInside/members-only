@@ -19,7 +19,7 @@ html
               a(href="new-message") Create a new message
             li
               form(action="/logout", method="post")
-                button(type="submit", class="link-button") Log out
+                button.button-as-link(type="submit", class="link-button") Log out ( #{currentUser.firstName} ) 
           li 
             a(href="secret-page") Secret 
       div.flex-1 
